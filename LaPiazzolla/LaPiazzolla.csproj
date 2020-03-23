@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Images\hola.jpg" />
+    <None Include="wwwroot\Images\logo.jpg" />
+    <None Include="wwwroot\Images\logoPiazzolla.jpg" />
+    <None Include="wwwroot\Images\logoPiazzolla.pdf" />
+    <None Include="wwwroot\Images\logoPiazzolla.png" />
+    <None Include="wwwroot\Images\PROPAGANDA.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
       <PrivateAssets>all</PrivateAssets>
