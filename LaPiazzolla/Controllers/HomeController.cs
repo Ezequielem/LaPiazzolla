@@ -23,6 +23,16 @@ namespace LaPiazzolla.Controllers
             return View();
         }
 
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        public IActionResult Us()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
