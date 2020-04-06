@@ -32,6 +32,17 @@ namespace LaPiazzolla.Data
             }
 
             context.SaveChanges();
+
+            var contacto = new Contacto[] {
+                new Contacto{ Nombre="Ezequiel", Apellido="Menseguet", Email="eemenseguet@hotmail.com", Telefono="3512163999", Mensaje="Quisiera que me contara sobre de las clases de guitarra"}
+            };
+
+            foreach (Contacto c in contacto)
+            {
+                context.Contactos.Add(c);
+            }
+            
+            context.SaveChanges();
         }
     }
 }

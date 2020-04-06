@@ -15,5 +15,6 @@ namespace LaPiazzolla.Data
         }
 
         public DbSet<Curso> Curso { get; set; }
+        public DbSet<Contacto> Contactos { get; set; }
     }
 }
