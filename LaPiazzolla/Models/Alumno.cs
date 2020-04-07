@@ -26,7 +26,7 @@ namespace LaPiazzolla.Models
         public Direccion Direccion { get; set; }
         [Required]
         public List<Pago> Pagos { get; set; }
-        //[Required]
-        //public List<Alumno_x_Curso> Alumnos_X_Cursos { get; set; }
+        [Required]
+        public List<Alumno_x_Curso> Alumnos_X_Cursos { get; set; }
     }
 }

@@ -11,8 +11,15 @@ namespace LaPiazzolla.Models
         public int AlumnoId { get; set; }
         public int CursoId { get; set; }
         [Required]
-        public Alumno Alumno { get; set; }
+        public DateTime FechaInscripcion { get; set; }
         [Required]
+        public bool Activo { get; set; }
+        [Required]
+        [StringLength(512)]
+        public string Observacion { get; set; }
+        [Required]
+        public Alumno Alumno { get; set; }
+        [Required]  
         public Curso Curso { get; set; }
     }
 }

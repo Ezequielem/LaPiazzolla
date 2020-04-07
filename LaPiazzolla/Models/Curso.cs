@@ -21,7 +21,7 @@ namespace LaPiazzolla.Models
         public string Descripcion { get; set; }
         [Required]
         public Profesor Profesor { get; set; }
-        //[Required]
-        //public List<Alumno_x_Curso> Alumnos_X_Cursos { get; set; }
+        [Required]
+        public List<Alumno_x_Curso> Alumnos_X_Cursos { get; set; }
     }
 }
