@@ -19,5 +19,9 @@ namespace LaPiazzolla.Models
         [StringLength(512, ErrorMessage ="La deescripcion puede tener 512 caracteres" )]
         [Display(Name ="Descripción")]
         public string Descripcion { get; set; }
+        [Required]
+        public Profesor Profesor { get; set; }
+        //[Required]
+        //public List<Alumno_x_Curso> Alumnos_X_Cursos { get; set; }
     }
 }

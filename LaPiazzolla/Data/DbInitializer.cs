@@ -13,7 +13,7 @@ namespace LaPiazzolla.Data
             context.Database.EnsureCreated();
 
             //Buscar si existen registros en la tabla Cursos
-            if (context.Curso.Any())
+            if (context.Cursos.Any())
             {
                 return;
             }
@@ -28,20 +28,9 @@ namespace LaPiazzolla.Data
 
             foreach (Curso c in curso)
             {
-                context.Curso.Add(c);
+                context.Cursos.Add(c);
             }
 
-            context.SaveChanges();
-
-            var contacto = new Contacto[] {
-                new Contacto{ Nombre="Ezequiel", Apellido="Menseguet", Email="eemenseguet@hotmail.com", Telefono="3512163999", Mensaje="Quisiera que me contara sobre de las clases de guitarra"}
-            };
-
-            foreach (Contacto c in contacto)
-            {
-                context.Contactos.Add(c);
-            }
-            
             context.SaveChanges();
         }
     }

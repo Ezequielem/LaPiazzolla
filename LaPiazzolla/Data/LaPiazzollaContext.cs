@@ -12,9 +12,20 @@ namespace LaPiazzolla.Data
         public LaPiazzollaContext (DbContextOptions<LaPiazzollaContext> options)
             : base(options)
         {
+
         }
 
-        public DbSet<Curso> Curso { get; set; }
-        public DbSet<Contacto> Contactos { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //modelBuilder.Entity<Alumno_x_Curso>().HasKey(x=>new { x.AlumnoId, x.CursoId});
+        }
+
+        public DbSet<Sexo> Sexo { get; set; }
+        public DbSet<Direccion> Direcciones { get; set; }
+        public DbSet<Pago> Pagos { get; set; }
+        public DbSet<Alumno> Alumnos { get; set; }
+        public DbSet<Curso> Cursos { get; set; }
+        //public DbSet<Alumno_x_Curso> Alumnos_X_Cursos { get; set; }
+        public DbSet<Profesor> Profesores { get; set; }
     }
 }
