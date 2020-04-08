@@ -18,6 +18,19 @@ namespace LaPiazzolla.Data
                 return;
             }
 
+            var sexo = new Sexo[]
+                {
+                    new Sexo{ Descripcion="MASCULINO"},
+                    new Sexo{Descripcion="FEMENINO"}
+                };
+
+            foreach (Sexo sexo1 in sexo)
+            {
+                context.Sexo.Add(sexo1);
+            }
+
+            context.SaveChanges();
+
             //var curso = new Curso[]
             //{
             //    new Curso{ Nombre="Guitarra", Descripcion="Curso integral de guitarra", PrecioMensual=1600},
