@@ -7,8 +7,8 @@ namespace LaPiazzolla.Models.LaPiazzollaViewModels
 {
     public class CursoIndexData
     {
-        public List<Curso> Cursos { get; set; }
-        public List<Alumno> Alumnos { get; set; }
-        public List<Alumno_x_Curso> AlumnosCursos { get; set; }
+        public IEnumerable<Curso> Cursos { get; set; }
+        public IEnumerable<Alumno> Alumnos { get; set; }
+        public IEnumerable<Alumno_x_Curso> AlumnosCursos { get; set; }
     }
 }

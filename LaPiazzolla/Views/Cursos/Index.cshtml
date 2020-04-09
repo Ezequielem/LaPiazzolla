@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LaPiazzolla.Models.Curso>
+﻿@model LaPiazzolla.Models.LaPiazzollaViewModels.CursoIndexData
 
 @{
     ViewData["Title"] = "Indice";
@@ -14,22 +14,28 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nombre)
+                @Html.DisplayNameFor(model => model.Cursos.First().Nombre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PrecioMensual)
+                @Html.DisplayNameFor(model => model.Cursos.First().PrecioMensual)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
+                @Html.DisplayNameFor(model => model.Cursos.First().Descripcion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Profesor)
+                @Html.DisplayNameFor(model => model.Cursos.First().Profesor)
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
+@foreach (var item in Model.Cursos)
+{
+    string filaSeleccionada = "";
+    if (item.CursoId == (int?)ViewData["CursoId"])
+    {
+        filaSeleccionada = "success";
+    }
+        <tr class="@filaSeleccionada">
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
@@ -43,6 +49,22 @@
                 @Html.DisplayFor(modelItem => item.Profesor.Nombre)
             </td>
             <td>
+                @if (item.Profesor != null)
+                {
+                    @item.Profesor.Nombre 
+                    @item.Profesor.Apellido;
+                }
+            </td>
+            <td>
+                @{ 
+                    foreach (var alumno in item.Alumnos_X_Cursos)
+                    {
+                        @alumno.Alumno.AlumnoId @:  @alumno.Alumno.Nombre <br />
+                    }
+                }
+            </td>
+            <td>
+                <a asp-action="Index" asp-route-id="@item.CursoId">Seleccionar</a> |
                 <a asp-action="Edit" asp-route-id="@item.CursoId">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.CursoId">Detalles</a> |
                 <a asp-action="Delete" asp-route-id="@item.CursoId">Borrar</a>

@@ -23,10 +23,34 @@ namespace LaPiazzolla.Controllers
         }
 
         // GET: Cursos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id, int? alumnoId)
         {
-            var cursos = _context.Cursos.Include(c=>c.Profesor).AsNoTracking();
-            return View(await _context.Cursos.ToListAsync());
+            var ViewModel = new CursoIndexData();
+            ViewModel.Cursos = await _context.Cursos
+                .Include(p => p.Profesor)
+                    .ThenInclude(p =>p.Direccion)
+                .Include(p => p.Alumnos_X_Cursos)
+                    .ThenInclude(p => p.Alumno)
+                        .ThenInclude(p => p.Direccion)
+                .AsNoTracking()
+                .OrderBy(p => p.Nombre)
+                .ToListAsync();
+            //var cursos = _context.Cursos.Include(c=>c.Profesor).AsNoTracking();
+
+            if (id != null)
+            {
+                ViewData["CursoId"] = id.Value;
+                Curso curso = ViewModel.Cursos.Where(c => c.CursoId == id.Value).Single();
+                ViewModel.Alumnos = curso.Alumnos_X_Cursos.Select(s => s.Alumno);
+            }
+
+            if (alumnoId != null)
+            {
+                ViewData["AlumnoId"] = alumnoId.Value;
+                ViewModel.AlumnosCursos = ViewModel.Alumnos.Where(a => a.AlumnoId == alumnoId).Single().Alumnos_X_Cursos;
+            }
+
+            return View(ViewModel/*await _context.Cursos.ToListAsync()*/);
         }
 
         // GET: Cursos/Details/5
