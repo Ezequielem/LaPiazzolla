@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LaPiazzolla.Data;
 using LaPiazzolla.Models;
+using LaPiazzolla.Models.LaPiazzollaViewModels;
 using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -116,79 +117,6 @@ namespace LaPiazzolla.Controllers
                                      select p;
             ViewBag.Profesor = new SelectList(consultaProfesores.AsNoTracking(), "ProfesorId", "Nombre", departamentoSeleccionado);
         }
-
-        //// GET: Cursos/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: Cursos/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("CursoId,Nombre,PrecioMensual,Descripcion")] Curso curso)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(curso);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(curso);
-        //}
-
-        //// GET: Cursos/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var curso = await _context.Cursos.FindAsync(id);
-        //    if (curso == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(curso);
-        //}
-
-        //// POST: Cursos/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("CursoId,Nombre,PrecioMensual,Descripcion")] Curso curso)
-        //{
-        //    if (id != curso.CursoId)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(curso);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!CursoExists(curso.CursoId))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(curso);
-        //}
 
         // GET: Cursos/Delete/5
         public async Task<IActionResult> Delete(int? id)
