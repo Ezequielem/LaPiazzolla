@@ -38,12 +38,52 @@
                 <select asp-for="SexoId" class="form-control" asp-items="ViewBag.SexoId">
                     <option value="">-- Seleccione sexo --</option>
                 </select>
-                <span asp-validation-for="SexoId" class="text-danger" ></span>
+                <span asp-validation-for="SexoId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion.Calle" class="control-label"></label>
+                <input asp-for="Direccion.Calle" class="form-control" />
+                <span asp-validation-for="Direccion.Calle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion.Altura" class="control-label"></label>
+                <input asp-for="Direccion.Altura" class="form-control" />
+                <span asp-validation-for="Direccion.Altura" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion.Piso" class="control-label"></label>
+                <input asp-for="Direccion.Piso" class="form-control" />
+                <span asp-validation-for="Direccion.Piso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion.Departamento" class="control-label"></label>
+                <input asp-for="Direccion.Departamento" class="form-control" />
+                <span asp-validation-for="Direccion.Departamento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion.CodigoPostal" class="control-label"></label>
+                <input asp-for="Direccion.CodigoPostal" class="form-control" />
+                <span asp-validation-for="Direccion.CodigoPostal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion.Localidad" class="control-label"></label>
+                <input asp-for="Direccion.Localidad" class="form-control" />
+                <span asp-validation-for="Direccion.Localidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion.Provincia" class="control-label"></label>
+                <input asp-for="Direccion.Provincia" class="form-control" />
+                <span asp-validation-for="Direccion.Provincia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion.Pais" class="control-label"></label>
+                <input asp-for="Direccion.Pais" class="form-control" />
+                <span asp-validation-for="Direccion.Pais" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
