@@ -8,23 +8,16 @@ namespace LaPiazzolla.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Direcciones",
+                name: "Provincias",
                 columns: table => new
                 {
-                    DireccionId = table.Column<int>(nullable: false)
+                    ProvinciaId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Calle = table.Column<string>(nullable: false),
-                    Altura = table.Column<string>(nullable: false),
-                    Piso = table.Column<string>(nullable: true),
-                    Departamento = table.Column<string>(nullable: true),
-                    CodigoPostal = table.Column<string>(nullable: false),
-                    Localidad = table.Column<string>(nullable: false),
-                    Provincia = table.Column<string>(nullable: false),
-                    Pais = table.Column<string>(nullable: false)
+                    Nombre = table.Column<string>(maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Direcciones", x => x.DireccionId);
+                    table.PrimaryKey("PK_Provincias", x => x.ProvinciaId);
                 });
 
             migrationBuilder.CreateTable(
@@ -41,16 +34,80 @@ namespace LaPiazzolla.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Departamentos",
+                columns: table => new
+                {
+                    DepartamentoId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(maxLength: 250, nullable: false),
+                    ProvinciaId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Departamentos", x => x.DepartamentoId);
+                    table.ForeignKey(
+                        name: "FK_Departamentos_Provincias_ProvinciaId",
+                        column: x => x.ProvinciaId,
+                        principalTable: "Provincias",
+                        principalColumn: "ProvinciaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Direcciones",
+                columns: table => new
+                {
+                    DireccionId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Calle = table.Column<string>(maxLength: 200, nullable: false),
+                    Altura = table.Column<int>(nullable: false),
+                    Piso = table.Column<string>(nullable: true),
+                    Departamento = table.Column<string>(nullable: true),
+                    CodigoPostal = table.Column<string>(maxLength: 20, nullable: false),
+                    ProvinciaId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Direcciones", x => x.DireccionId);
+                    table.ForeignKey(
+                        name: "FK_Direcciones_Provincias_ProvinciaId",
+                        column: x => x.ProvinciaId,
+                        principalTable: "Provincias",
+                        principalColumn: "ProvinciaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Localidades",
+                columns: table => new
+                {
+                    LocalidadId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(maxLength: 250, nullable: false),
+                    DepartamentoId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Localidades", x => x.LocalidadId);
+                    table.ForeignKey(
+                        name: "FK_Localidades_Departamentos_DepartamentoId",
+                        column: x => x.DepartamentoId,
+                        principalTable: "Departamentos",
+                        principalColumn: "DepartamentoId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Alumnos",
                 columns: table => new
                 {
                     AlumnoId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(nullable: false),
-                    Apellido = table.Column<string>(nullable: false),
-                    Dni = table.Column<string>(nullable: false),
+                    Nombre = table.Column<string>(maxLength: 200, nullable: false),
+                    Apellido = table.Column<string>(maxLength: 200, nullable: false),
+                    Dni = table.Column<string>(maxLength: 20, nullable: false),
                     FechaDeNacimiento = table.Column<DateTime>(nullable: false),
-                    Email = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(maxLength: 200, nullable: false),
                     SexoId = table.Column<int>(nullable: false),
                     DireccionId = table.Column<int>(nullable: false)
                 },
@@ -77,11 +134,11 @@ namespace LaPiazzolla.Migrations
                 {
                     ProfesorId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(nullable: false),
-                    Apellido = table.Column<string>(nullable: false),
-                    Dni = table.Column<string>(nullable: false),
+                    Nombre = table.Column<string>(maxLength: 200, nullable: false),
+                    Apellido = table.Column<string>(maxLength: 200, nullable: false),
+                    Dni = table.Column<string>(maxLength: 20, nullable: false),
                     FechaDeNacimiento = table.Column<DateTime>(nullable: false),
-                    Email = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(maxLength: 200, nullable: false),
                     SexoId = table.Column<int>(nullable: false),
                     DireccionId = table.Column<int>(nullable: false)
                 },
@@ -108,10 +165,10 @@ namespace LaPiazzolla.Migrations
                 {
                     PagoId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Monto = table.Column<float>(nullable: false),
+                    Monto = table.Column<decimal>(type: "money", nullable: false),
                     FechaPago = table.Column<DateTime>(nullable: false),
-                    Observacion = table.Column<string>(nullable: true),
-                    AlumnoId = table.Column<int>(nullable: true)
+                    Observacion = table.Column<string>(maxLength: 500, nullable: true),
+                    AlumnoId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -121,7 +178,7 @@ namespace LaPiazzolla.Migrations
                         column: x => x.AlumnoId,
                         principalTable: "Alumnos",
                         principalColumn: "AlumnoId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -131,7 +188,7 @@ namespace LaPiazzolla.Migrations
                     CursoId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(maxLength: 50, nullable: false),
-                    PrecioMensual = table.Column<float>(nullable: false),
+                    PrecioMensual = table.Column<decimal>(type: "money", nullable: false),
                     Descripcion = table.Column<string>(maxLength: 512, nullable: false),
                     ProfesorId = table.Column<int>(nullable: false)
                 },
@@ -146,6 +203,33 @@ namespace LaPiazzolla.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Alumnos_X_Cursos",
+                columns: table => new
+                {
+                    AlumnoId = table.Column<int>(nullable: false),
+                    CursoId = table.Column<int>(nullable: false),
+                    FechaInscripcion = table.Column<DateTime>(nullable: false),
+                    Activo = table.Column<bool>(nullable: false),
+                    Observacion = table.Column<string>(maxLength: 512, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Alumnos_X_Cursos", x => new { x.AlumnoId, x.CursoId });
+                    table.ForeignKey(
+                        name: "FK_Alumnos_X_Cursos_Alumnos_AlumnoId",
+                        column: x => x.AlumnoId,
+                        principalTable: "Alumnos",
+                        principalColumn: "AlumnoId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Alumnos_X_Cursos_Cursos_CursoId",
+                        column: x => x.CursoId,
+                        principalTable: "Cursos",
+                        principalColumn: "CursoId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Alumnos_DireccionId",
                 table: "Alumnos",
@@ -157,9 +241,30 @@ namespace LaPiazzolla.Migrations
                 column: "SexoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Alumnos_X_Cursos_CursoId",
+                table: "Alumnos_X_Cursos",
+                column: "CursoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Cursos_ProfesorId",
                 table: "Cursos",
                 column: "ProfesorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Departamentos_ProvinciaId",
+                table: "Departamentos",
+                column: "ProvinciaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Direcciones_ProvinciaId",
+                table: "Direcciones",
+                column: "ProvinciaId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Localidades_DepartamentoId",
+                table: "Localidades",
+                column: "DepartamentoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pagos_AlumnoId",
@@ -180,22 +285,34 @@ namespace LaPiazzolla.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Cursos");
+                name: "Alumnos_X_Cursos");
+
+            migrationBuilder.DropTable(
+                name: "Localidades");
 
             migrationBuilder.DropTable(
                 name: "Pagos");
 
             migrationBuilder.DropTable(
-                name: "Profesores");
+                name: "Cursos");
+
+            migrationBuilder.DropTable(
+                name: "Departamentos");
 
             migrationBuilder.DropTable(
                 name: "Alumnos");
+
+            migrationBuilder.DropTable(
+                name: "Profesores");
 
             migrationBuilder.DropTable(
                 name: "Direcciones");
 
             migrationBuilder.DropTable(
                 name: "Sexo");
+
+            migrationBuilder.DropTable(
+                name: "Provincias");
         }
     }
 }

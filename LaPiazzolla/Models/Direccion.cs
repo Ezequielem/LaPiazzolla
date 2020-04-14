@@ -10,19 +10,19 @@ namespace LaPiazzolla.Models
     {
         public int DireccionId { get; set; }
         [Required]
+        [StringLength(200)]
         public string Calle { get; set; }
         [Required]
-        public string Altura { get; set; }
+        public int Altura { get; set; }
         public string Piso { get; set; }
         public string Departamento { get; set; }
         [Required]
+        [StringLength(20)]
         public string CodigoPostal { get; set; }
         [Required]
-        public string Localidad{ get; set; }
-        [Required]
-        public string Provincia { get; set; }
-        [Required]
-        public string Pais { get; set; }
+        public int ProvinciaId { get; set; }
+        public Provincia Provincia { get; set; }
+
 
     }
 }

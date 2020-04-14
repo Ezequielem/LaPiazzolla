@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LaPiazzolla.Migrations
 {
     [DbContext(typeof(LaPiazzollaContext))]
-    [Migration("20200413235336_CambiosCursoProfesor")]
-    partial class CambiosCursoProfesor
+    [Migration("20200414180419_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,25 +30,29 @@ namespace LaPiazzolla.Migrations
 
                     b.Property<string>("Apellido")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<int>("DireccionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Dni")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<DateTime>("FechaDeNacimiento")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<int>("SexoId")
                         .HasColumnType("int");
@@ -105,8 +109,8 @@ namespace LaPiazzolla.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<float>("PrecioMensual")
-                        .HasColumnType("real");
+                    b.Property<decimal>("PrecioMensual")
+                        .HasColumnType("money");
 
                     b.Property<int>("ProfesorId")
                         .HasColumnType("int");
@@ -118,6 +122,28 @@ namespace LaPiazzolla.Migrations
                     b.ToTable("Cursos");
                 });
 
+            modelBuilder.Entity("LaPiazzolla.Models.Departamento", b =>
+                {
+                    b.Property<int>("DepartamentoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<int>("ProvinciaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DepartamentoId");
+
+                    b.HasIndex("ProvinciaId");
+
+                    b.ToTable("Departamentos");
+                });
+
             modelBuilder.Entity("LaPiazzolla.Models.Direccion", b =>
                 {
                     b.Property<int>("DireccionId")
@@ -125,39 +151,56 @@ namespace LaPiazzolla.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Altura")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Altura")
+                        .HasColumnType("int");
 
                     b.Property<string>("Calle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<string>("CodigoPostal")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<string>("Departamento")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Localidad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Pais")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Piso")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Provincia")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ProvinciaId")
+                        .HasColumnType("int");
 
                     b.HasKey("DireccionId");
 
+                    b.HasIndex("ProvinciaId")
+                        .IsUnique();
+
                     b.ToTable("Direcciones");
+                });
+
+            modelBuilder.Entity("LaPiazzolla.Models.Localidad", b =>
+                {
+                    b.Property<int>("LocalidadId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DepartamentoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
+                    b.HasKey("LocalidadId");
+
+                    b.HasIndex("DepartamentoId");
+
+                    b.ToTable("Localidades");
                 });
 
             modelBuilder.Entity("LaPiazzolla.Models.Pago", b =>
@@ -167,17 +210,18 @@ namespace LaPiazzolla.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AlumnoId")
+                    b.Property<int>("AlumnoId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaPago")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("Monto")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Monto")
+                        .HasColumnType("money");
 
                     b.Property<string>("Observacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.HasKey("PagoId");
 
@@ -195,25 +239,29 @@ namespace LaPiazzolla.Migrations
 
                     b.Property<string>("Apellido")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<int>("DireccionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Dni")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<DateTime>("FechaDeNacimiento")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<int>("SexoId")
                         .HasColumnType("int");
@@ -225,6 +273,23 @@ namespace LaPiazzolla.Migrations
                     b.HasIndex("SexoId");
 
                     b.ToTable("Profesores");
+                });
+
+            modelBuilder.Entity("LaPiazzolla.Models.Provincia", b =>
+                {
+                    b.Property<int>("ProvinciaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.HasKey("ProvinciaId");
+
+                    b.ToTable("Provincias");
                 });
 
             modelBuilder.Entity("LaPiazzolla.Models.Sexo", b =>
@@ -283,11 +348,40 @@ namespace LaPiazzolla.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("LaPiazzolla.Models.Departamento", b =>
+                {
+                    b.HasOne("LaPiazzolla.Models.Provincia", "Provincia")
+                        .WithMany("Departamentos")
+                        .HasForeignKey("ProvinciaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LaPiazzolla.Models.Direccion", b =>
+                {
+                    b.HasOne("LaPiazzolla.Models.Provincia", "Provincia")
+                        .WithOne("Direccion")
+                        .HasForeignKey("LaPiazzolla.Models.Direccion", "ProvinciaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LaPiazzolla.Models.Localidad", b =>
+                {
+                    b.HasOne("LaPiazzolla.Models.Departamento", "Departamento")
+                        .WithMany()
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("LaPiazzolla.Models.Pago", b =>
                 {
                     b.HasOne("LaPiazzolla.Models.Alumno", "Alumno")
                         .WithMany("Pagos")
-                        .HasForeignKey("AlumnoId");
+                        .HasForeignKey("AlumnoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LaPiazzolla.Models.Profesor", b =>

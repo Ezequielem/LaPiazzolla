@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LaPiazzolla.Models
 {
@@ -14,7 +15,9 @@ namespace LaPiazzolla.Models
         public string Nombre { get; set; }
         [Required]        
         [Display(Name ="Precio")]
-        public float PrecioMensual { get; set; }
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "money")]
+        public decimal PrecioMensual { get; set; }
         [Required]
         [StringLength(512, ErrorMessage ="La deescripcion puede tener 512 caracteres" )]
         [Display(Name ="Descripción")]

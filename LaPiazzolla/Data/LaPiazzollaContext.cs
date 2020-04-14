@@ -29,5 +29,8 @@ namespace LaPiazzolla.Data
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Alumno_x_Curso> Alumnos_X_Cursos { get; set; }
         public DbSet<Profesor> Profesores { get; set; }
+        public DbSet<Provincia> Provincias { get; set; }
+        public DbSet<Departamento> Departamentos { get; set; }
+        public DbSet<Localidad> Localidades { get; set; }
     }
 }
