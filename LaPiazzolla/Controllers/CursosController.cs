@@ -87,7 +87,7 @@ namespace LaPiazzolla.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            listadoDeProfesores(curso.Profesor);
+            listadoDeProfesores(curso.ProfesorId);
             return View(curso);
         }
 
@@ -102,7 +102,7 @@ namespace LaPiazzolla.Controllers
             {
                 return NotFound();
             }
-            listadoDeProfesores(curso.Profesor);
+            listadoDeProfesores(curso.ProfesorId);
             return View(curso);
         }
 
@@ -130,17 +130,9 @@ namespace LaPiazzolla.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            listadoDeProfesores(cursoAModdificar.Profesor);
+            listadoDeProfesores(cursoAModdificar.ProfesorId);
             return View(cursoAModdificar);
-        }
-
-        public void listadoDeProfesores(object departamentoSeleccionado = null)
-        {
-            var consultaProfesores = from p in _context.Profesores
-                                     orderby p.Nombre
-                                     select p;
-            ViewBag.Profesor = new SelectList(consultaProfesores.AsNoTracking(), "ProfesorId", "Nombre", departamentoSeleccionado);
-        }
+        }        
 
         // GET: Cursos/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -175,5 +167,13 @@ namespace LaPiazzolla.Controllers
         {
             return _context.Cursos.Any(e => e.CursoId == id);
         }
+
+        public void listadoDeProfesores(object profesorSeleccionado = null)
+        {
+            var consultaProfesores = from p in _context.Profesores
+                                     orderby p.Nombre
+                                     select p;
+            ViewBag.ProfesorId = new SelectList(consultaProfesores.AsNoTracking(), "ProfesorId", "Nombre", profesorSeleccionado);
+        }           
     }
 }

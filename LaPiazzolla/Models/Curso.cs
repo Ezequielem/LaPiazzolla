@@ -20,8 +20,8 @@ namespace LaPiazzolla.Models
         [Display(Name ="Descripción")]
         public string Descripcion { get; set; }
         [Required]
+        public int ProfesorId { get; set; }
         public Profesor Profesor { get; set; }
-        [Required]
         public List<Alumno_x_Curso> Alumnos_X_Cursos { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace LaPiazzolla.Data
             context.Database.EnsureCreated();
 
             //Buscar si existen registros en la tabla Cursos
-            if (context.Cursos.Any())
+            if (context.Sexo.Any())
             {
                 return;
             }

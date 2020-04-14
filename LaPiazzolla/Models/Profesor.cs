@@ -21,10 +21,11 @@ namespace LaPiazzolla.Models
         [EmailAddress]
         public string Email { get; set; }
         [Required]
+        public int SexoId { get; set; }
+        [Required]
+        public int DireccionId { get; set; }
         public Sexo Sexo { get; set; }
-        [Required]
         public Direccion Direccion { get; set; }
-        [Required]
         public List<Curso> Cursos { get; set; }
     }
 }

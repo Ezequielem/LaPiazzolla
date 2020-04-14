@@ -46,6 +46,7 @@ namespace LaPiazzolla.Controllers
         // GET: Profesores/Create
         public IActionResult Create()
         {
+            listaDeSexos();
             return View();
         }
 
@@ -54,7 +55,7 @@ namespace LaPiazzolla.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProfesorId,Nombre,Apellido,Dni,FechaDeNacimiento,Email")] Profesor profesor)
+        public async Task<IActionResult> Create([Bind("ProfesorId,Nombre,Apellido,Dni,FechaDeNacimiento,Email,SexoId,DireccionId")] Profesor profesor)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +63,7 @@ namespace LaPiazzolla.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            listaDeSexos(profesor.SexoId);
             return View(profesor);
         }
 
@@ -148,6 +150,13 @@ namespace LaPiazzolla.Controllers
         private bool ProfesorExists(int id)
         {
             return _context.Profesores.Any(e => e.ProfesorId == id);
+        }
+
+        public void listaDeSexos(object sexoSeleccionado = null)
+        {
+            var consultaSexo = from s in _context.Sexo
+                               select s;
+            ViewBag.SexoId = new SelectList(consultaSexo.AsNoTracking(), "SexoId", "Descripcion", sexoSeleccionado);
         }
     }
 }

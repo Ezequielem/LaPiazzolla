@@ -46,14 +46,9 @@
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Profesor.Nombre)
-            </td>
-            <td>
-                @if (item.Profesor != null)
-                {
-                    @item.Profesor.Nombre 
-                    @item.Profesor.Apellido;
-                }
+                @Html.DisplayFor(modelItem => item.Profesor.Nombre) 
+                &nbsp;
+                @Html.DisplayFor(modelItem => item.Profesor.Apellido)
             </td>
             <td>
                 @{ 
