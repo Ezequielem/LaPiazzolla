@@ -47,6 +47,9 @@ namespace LaPiazzolla.Controllers
         public IActionResult Create()
         {
             listaDeSexos();
+            listaDeProvincias();
+            //listaDeDepartamentos();
+            //listaDeLocalidades();
             return View();
         }
 
@@ -64,6 +67,9 @@ namespace LaPiazzolla.Controllers
                 return RedirectToAction(nameof(Index));
             }
             listaDeSexos(profesor.SexoId);
+            listaDeProvincias(profesor.Direccion.Localidad.Departamento.ProvinciaId);
+            //listaDeDepartamentos(profesor.Direccion.Localidad.DepartamentoId);
+            //listaDeLocalidades(profesor.Direccion.LocalidadId);
             return View(profesor);
         }
 
@@ -158,5 +164,40 @@ namespace LaPiazzolla.Controllers
                                select s;
             ViewBag.SexoId = new SelectList(consultaSexo.AsNoTracking(), "SexoId", "Descripcion", sexoSeleccionado);
         }
+
+        public void listaDeProvincias(object provinciaSeleccionada = null)
+        {
+            var consultaProvincia = from p in _context.Provincias
+                                    orderby p.Nombre
+                                    select p;
+            ViewBag.ProvinciaId = new SelectList(consultaProvincia.AsNoTracking(), "ProvinciaId", "Nombre", provinciaSeleccionada);
+                                    
+        }
+
+        public JsonResult obtenerDepartamentos(int ProvinciaId)
+        {
+            var consultaDepartamento = from d in _context.Departamentos
+                                       where d.ProvinciaId == ProvinciaId
+                                       orderby d.Nombre
+                                       select d;
+            return Json(consultaDepartamento);
+        }
+
+        //public void listaDeDepartamentos(object departamentoSeleccionado = null)
+        //{
+        //    var consultaDepartamento = from d in _context.Departamentos
+        //                               where d.ProvinciaId == 1
+        //                               orderby d.Nombre
+        //                               select d;
+        //    ViewBag.DepartamentoId = new SelectList(consultaDepartamento.AsNoTracking(), "DepartamentoId", "Nombre", departamentoSeleccionado);
+        //}
+
+        //public void listaDeLocalidades(object localidadesSeleccionadas = null)
+        //{
+        //    var consultaLocalidad = from l in _context.Localidades
+        //                            orderby l.Nombre
+        //                            select l;
+        //    ViewBag.LocalidadId = new SelectList(consultaLocalidad.AsNoTracking(), "LocalidadId", "Nombre", localidadesSeleccionadas);
+        //}
     }
 }

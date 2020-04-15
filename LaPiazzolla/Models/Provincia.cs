@@ -12,7 +12,6 @@ namespace LaPiazzolla.Models
         [Required]
         [StringLength(30)]
         public string Nombre { get; set; }
-        public List<Departamento> Departamentos { get; set; }
-        public Direccion Direccion { get; set; }
+        public List<Departamento> Departamentos { get; set; }       
     }
 }

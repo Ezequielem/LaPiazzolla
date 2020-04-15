@@ -15,13 +15,15 @@ namespace LaPiazzolla.Models
         [Required]
         public int Altura { get; set; }
         public string Piso { get; set; }
+        [Display(Name = "Depto")]
         public string Departamento { get; set; }
         [Required]
         [StringLength(20)]
+        [Display(Name = "Codigo Postal")]
         public string CodigoPostal { get; set; }
         [Required]
-        public int ProvinciaId { get; set; }
-        public Provincia Provincia { get; set; }
+        public int LocalidadId { get; set; }
+        public Localidad Localidad { get; set; }
 
 
     }
