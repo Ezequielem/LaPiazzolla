@@ -15,7 +15,7 @@ namespace LaPiazzolla.Models
         public string Nombre { get; set; }
         [Required]        
         [Display(Name ="Precio")]
-        [DataType(DataType.)]
+        [DataType(DataType.Currency)]
         [Column(TypeName = "money")]
         public decimal PrecioMensual { get; set; }
         [Required]
