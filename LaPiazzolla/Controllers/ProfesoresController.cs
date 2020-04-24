@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LaPiazzolla.Data;
 using LaPiazzolla.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace LaPiazzolla.Controllers
 {
@@ -46,6 +49,8 @@ namespace LaPiazzolla.Controllers
         // GET: Profesores/Create
         public IActionResult Create()
         {
+            var profesor = new Profesor();
+            profesor.Direccion = new Direccion();
             listaDeSexos();
             return View();
         }
@@ -56,13 +61,14 @@ namespace LaPiazzolla.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProfesorId,Nombre,Apellido,Dni,FechaDeNacimiento,Email,SexoId,Direccion")] Profesor profesor)
-        {            
+        {
             if (ModelState.IsValid)
             {
+                profesor.Direccion.Localidad = null;
                 _context.Add(profesor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+            }            
             listaDeSexos(profesor.SexoId);
             return View(profesor);
         }

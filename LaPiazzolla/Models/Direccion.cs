@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace LaPiazzolla.Models
 {
@@ -24,7 +25,7 @@ namespace LaPiazzolla.Models
         public string CodigoPostal { get; set; }
         [Required]
         public int LocalidadId { get; set; }
-        [NotMapped]
+        [ValidateNever]
         public Localidad Localidad { get; set; }
 
 
