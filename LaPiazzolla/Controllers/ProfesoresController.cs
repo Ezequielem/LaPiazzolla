@@ -47,9 +47,6 @@ namespace LaPiazzolla.Controllers
         public IActionResult Create()
         {
             listaDeSexos();
-            listaDeProvincias();
-            //listaDeDepartamentos();
-            //listaDeLocalidades();
             return View();
         }
 
@@ -59,7 +56,7 @@ namespace LaPiazzolla.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProfesorId,Nombre,Apellido,Dni,FechaDeNacimiento,Email,SexoId,Direccion")] Profesor profesor)
-        {
+        {            
             if (ModelState.IsValid)
             {
                 _context.Add(profesor);
@@ -67,9 +64,6 @@ namespace LaPiazzolla.Controllers
                 return RedirectToAction(nameof(Index));
             }
             listaDeSexos(profesor.SexoId);
-            listaDeProvincias(profesor.Direccion.Localidad.Departamento.ProvinciaId);
-            //listaDeDepartamentos(profesor.Direccion.Localidad.DepartamentoId);
-            //listaDeLocalidades(profesor.Direccion.LocalidadId);
             return View(profesor);
         }
 
@@ -165,39 +159,39 @@ namespace LaPiazzolla.Controllers
             ViewBag.SexoId = new SelectList(consultaSexo.AsNoTracking(), "SexoId", "Descripcion", sexoSeleccionado);
         }
 
-        public void listaDeProvincias(object provinciaSeleccionada = null)
+        public JsonResult obtenerProvincias()
         {
-            var consultaProvincia = from p in _context.Provincias
-                                    orderby p.Nombre
-                                    select p;
-            ViewBag.ProvinciaId = new SelectList(consultaProvincia.AsNoTracking(), "ProvinciaId", "Nombre", provinciaSeleccionada);
-                                    
+            var consultaProvincias = from p in _context.Provincias
+                                     orderby p.Nombre
+                                     select new { 
+                                     id=p.ProvinciaId,
+                                     nombre=p.Nombre
+                                     };
+            return Json(consultaProvincias);
         }
 
-        public JsonResult obtenerDepartamentos(int ProvinciaId)
+        public JsonResult obtenerDepartamentos(int ProvId)
         {
-            var consultaDepartamento = from d in _context.Departamentos
-                                       where d.ProvinciaId == ProvinciaId
+            var consultaDepartamentos = from d in _context.Departamentos
+                                       where d.ProvinciaId == ProvId
                                        orderby d.Nombre
-                                       select d;
-            return Json(consultaDepartamento);
+                                       select new { 
+                                       id=d.DepartamentoId,
+                                       nombre=d.Nombre
+                                       };
+            return Json(consultaDepartamentos);
         }
 
-        //public void listaDeDepartamentos(object departamentoSeleccionado = null)
-        //{
-        //    var consultaDepartamento = from d in _context.Departamentos
-        //                               where d.ProvinciaId == 1
-        //                               orderby d.Nombre
-        //                               select d;
-        //    ViewBag.DepartamentoId = new SelectList(consultaDepartamento.AsNoTracking(), "DepartamentoId", "Nombre", departamentoSeleccionado);
-        //}
-
-        //public void listaDeLocalidades(object localidadesSeleccionadas = null)
-        //{
-        //    var consultaLocalidad = from l in _context.Localidades
-        //                            orderby l.Nombre
-        //                            select l;
-        //    ViewBag.LocalidadId = new SelectList(consultaLocalidad.AsNoTracking(), "LocalidadId", "Nombre", localidadesSeleccionadas);
-        //}
+        public JsonResult obtenerLocalidades(int DeptoId)
+        {
+            var consultaLocalidades = from l in _context.Localidades
+                                      where l.DepartamentoId == DeptoId
+                                      orderby l.Nombre
+                                      select new { 
+                                      id=l.DepartamentoId,
+                                      nombre=l.Nombre
+                                      };
+            return Json(consultaLocalidades);
+        }
     }
 }

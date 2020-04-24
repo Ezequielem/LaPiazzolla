@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LaPiazzolla.Models
 {
@@ -23,6 +24,7 @@ namespace LaPiazzolla.Models
         public string CodigoPostal { get; set; }
         [Required]
         public int LocalidadId { get; set; }
+        [NotMapped]
         public Localidad Localidad { get; set; }
 
 
