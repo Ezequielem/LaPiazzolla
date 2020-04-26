@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LaPiazzolla.Models
 {
     public class Departamento
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int DepartamentoId { get; set; }
         [Required]
         [StringLength(250)]

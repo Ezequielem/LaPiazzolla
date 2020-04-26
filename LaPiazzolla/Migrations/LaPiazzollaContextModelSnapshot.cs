@@ -123,9 +123,7 @@ namespace LaPiazzolla.Migrations
             modelBuilder.Entity("LaPiazzolla.Models.Departamento", b =>
                 {
                     b.Property<int>("DepartamentoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -181,9 +179,7 @@ namespace LaPiazzolla.Migrations
             modelBuilder.Entity("LaPiazzolla.Models.Localidad", b =>
                 {
                     b.Property<int>("LocalidadId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<int>("DepartamentoId")
                         .HasColumnType("int");
@@ -275,9 +271,7 @@ namespace LaPiazzolla.Migrations
             modelBuilder.Entity("LaPiazzolla.Models.Provincia", b =>
                 {
                     b.Property<int>("ProvinciaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()

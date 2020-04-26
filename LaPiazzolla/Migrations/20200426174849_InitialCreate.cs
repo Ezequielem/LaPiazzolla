@@ -11,8 +11,7 @@ namespace LaPiazzolla.Migrations
                 name: "Provincias",
                 columns: table => new
                 {
-                    ProvinciaId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProvinciaId = table.Column<int>(nullable: false),
                     Nombre = table.Column<string>(maxLength: 30, nullable: false)
                 },
                 constraints: table =>
@@ -37,8 +36,7 @@ namespace LaPiazzolla.Migrations
                 name: "Departamentos",
                 columns: table => new
                 {
-                    DepartamentoId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DepartamentoId = table.Column<int>(nullable: false),
                     Nombre = table.Column<string>(maxLength: 250, nullable: false),
                     ProvinciaId = table.Column<int>(nullable: false)
                 },
@@ -54,35 +52,10 @@ namespace LaPiazzolla.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Direcciones",
-                columns: table => new
-                {
-                    DireccionId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Calle = table.Column<string>(maxLength: 200, nullable: false),
-                    Altura = table.Column<int>(nullable: false),
-                    Piso = table.Column<string>(nullable: true),
-                    Departamento = table.Column<string>(nullable: true),
-                    CodigoPostal = table.Column<string>(maxLength: 20, nullable: false),
-                    ProvinciaId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Direcciones", x => x.DireccionId);
-                    table.ForeignKey(
-                        name: "FK_Direcciones_Provincias_ProvinciaId",
-                        column: x => x.ProvinciaId,
-                        principalTable: "Provincias",
-                        principalColumn: "ProvinciaId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Localidades",
                 columns: table => new
                 {
-                    LocalidadId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LocalidadId = table.Column<int>(nullable: false),
                     Nombre = table.Column<string>(maxLength: 250, nullable: false),
                     DepartamentoId = table.Column<int>(nullable: false)
                 },
@@ -94,6 +67,30 @@ namespace LaPiazzolla.Migrations
                         column: x => x.DepartamentoId,
                         principalTable: "Departamentos",
                         principalColumn: "DepartamentoId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Direcciones",
+                columns: table => new
+                {
+                    DireccionId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Calle = table.Column<string>(maxLength: 200, nullable: false),
+                    Altura = table.Column<int>(nullable: false),
+                    Piso = table.Column<string>(nullable: true),
+                    Departamento = table.Column<string>(nullable: true),
+                    CodigoPostal = table.Column<string>(maxLength: 20, nullable: false),
+                    LocalidadId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Direcciones", x => x.DireccionId);
+                    table.ForeignKey(
+                        name: "FK_Direcciones_Localidades_LocalidadId",
+                        column: x => x.LocalidadId,
+                        principalTable: "Localidades",
+                        principalColumn: "LocalidadId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -256,10 +253,9 @@ namespace LaPiazzolla.Migrations
                 column: "ProvinciaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Direcciones_ProvinciaId",
+                name: "IX_Direcciones_LocalidadId",
                 table: "Direcciones",
-                column: "ProvinciaId",
-                unique: true);
+                column: "LocalidadId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Localidades_DepartamentoId",
@@ -288,16 +284,10 @@ namespace LaPiazzolla.Migrations
                 name: "Alumnos_X_Cursos");
 
             migrationBuilder.DropTable(
-                name: "Localidades");
-
-            migrationBuilder.DropTable(
                 name: "Pagos");
 
             migrationBuilder.DropTable(
                 name: "Cursos");
-
-            migrationBuilder.DropTable(
-                name: "Departamentos");
 
             migrationBuilder.DropTable(
                 name: "Alumnos");
@@ -310,6 +300,12 @@ namespace LaPiazzolla.Migrations
 
             migrationBuilder.DropTable(
                 name: "Sexo");
+
+            migrationBuilder.DropTable(
+                name: "Localidades");
+
+            migrationBuilder.DropTable(
+                name: "Departamentos");
 
             migrationBuilder.DropTable(
                 name: "Provincias");
