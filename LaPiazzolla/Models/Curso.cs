@@ -17,7 +17,7 @@ namespace LaPiazzolla.Models
         [Display(Name ="Precio")]
         [DataType(DataType.Currency)]
         [Column(TypeName = "money")]
-        public decimal PrecioMensual { get; set; }
+        public float PrecioMensual { get; set; }
         [Required]
         [StringLength(512, ErrorMessage ="La deescripcion puede tener 512 caracteres" )]
         [Display(Name ="Descripción")]
