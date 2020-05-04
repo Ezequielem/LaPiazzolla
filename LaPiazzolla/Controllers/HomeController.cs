@@ -46,7 +46,7 @@ namespace LaPiazzolla.Controllers
             {
                 MailMessage correo = new MailMessage();
                 correo.From = new MailAddress("contacto@sistemasgem.com");
-                correo.To.Add("menseguet@hotmail.com");
+                correo.To.Add("humberto_menseguet@hotmail.com");
                 correo.Subject = email;
                 correo.Body = mensaje;
                 correo.IsBodyHtml = true;
